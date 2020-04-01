@@ -22,9 +22,9 @@ describe('<Filters />', () => {
   });
 
   describe('Finding pets', () => {
-    it('should call the `onFindPetsClick` callback prop when the "Find pets" button is clicked', () => {
+    it('should call the `onFindPets` callback prop when the "Find pets" button is clicked', () => {
       const spy = sinon.spy();
-      const wrapper = shallow(<Filters onFindPetsClick={spy} filters={FILTERS_STATE} />);
+      const wrapper = shallow(<Filters onFindPets={spy} filters={FILTERS_STATE} />);
       wrapper.find('button.secondary.button').simulate('click');
       expect(spy.calledOnce).to.be.true;
     });

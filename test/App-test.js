@@ -33,7 +33,7 @@ describe('<App />', () => {
       wrapper
         .find(Filters)
         .props()
-        .onFindPetsClick();
+        .onFindPets();
       expect(
         fetchMock.called('/api/pets'),
         'The right API URL is not being fetched when finding pets.'
@@ -52,7 +52,7 @@ describe('<App />', () => {
         wrapper
           .find(Filters)
           .props()
-          .onFindPetsClick();
+          .onFindPets();
         expect(
           fetchMock.called(`/api/pets?type=${type}`),
           'The right API URL is not being fetched when finding pets.'
