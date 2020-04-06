@@ -1,3 +1,4 @@
+  
 import React from 'react'
 
 import Filters from './Filters'
@@ -15,6 +16,47 @@ class App extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.getPets()
+  }
+
+
+  getPets = () => {
+    let PETS_API = '/api/pets'
+    let FILTER_TYPE = this.state.filters.type
+    fetch(`${PETS_API}${FILTER_TYPE !== 'all' ? '?type=' + FILTER_TYPE : ""}`)
+    .then((response) => {
+      return response.json();
+    })
+    .then((pets) => {
+      this.setState({
+        pets
+      });
+    })
+  }
+
+
+  changeType = newType => {
+    this.setState({
+      filters: {
+        type: newType}
+    })
+  }
+
+  adoptPet = petId => {
+    this.setState(prevState => {
+      return {
+        pets: prevState.pets.map(currentPet => {
+          if (currentPet.id !== petId){
+            return currentPet
+          } else {
+            return {...currentPet, isAdopted: true}
+          }
+        })
+      }
+    })
+  };
+
   render() {
     return (
       <div className="ui container">
@@ -24,10 +66,10 @@ class App extends React.Component {
         <div className="ui container">
           <div className="ui grid">
             <div className="four wide column">
-              <Filters />
+              <Filters onChangeType={this.changeType} onFindPetsClick={this.getPets} />
             </div>
             <div className="twelve wide column">
-              <PetBrowser />
+              <PetBrowser getPets={this.state.pets} onAdoptPet={this.adoptPet}/>
             </div>
           </div>
         </div>
